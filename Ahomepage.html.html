@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEREX Studio — Brand Strategy & Copywriting for Wellness Founders</title>
+    
+    <!-- Font Awesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ink: '#5A554A',
+                        accent: '#84B8A8',
+                        secondary: '#6D8EA0',
+                        hoverSec: '#7D9DA7',
+                        base: '#E2E2DF',
+                        surface: '#F4F4F4',
+                        line: '#dfd8cb',
+                    },
+                    fontFamily: {
+                        sans: ['"Public Sans"', 'sans-serif'],
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                    },
+                },
+            },
+        };
+    </script>
+    
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { -webkit-font-smoothing: antialiased; }
+        html { scroll-behavior: smooth; }
+        
+        .link-underline { position: relative; }
+        .link-underline::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: #F4F4F4;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+        .link-underline:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        .section-label { letter-spacing: 0.3em; }
+        
+        .btn-primary {
+            background-color: #84B8A8;
+            color: #5A554A;
+            padding: 1rem 2.5rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .btn-primary:hover {
+            background-color: #6D8EA0;
+            color: #F4F4F4;
+        }
+        .btn-secondary {
+            border: 1px solid #6D8EA0;
+            color: #6D8EA0;
+            padding: 1rem 2.5rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: inline-block;
+            background: transparent;
+        }
+        .btn-secondary:hover {
+            background-color: #7D9DA7;
+            color: #F4F4F4;
+            border-color: #7D9DA7;
+        }
+        
+        .nav-btn {
+            background-color: #84B8A8;
+            color: #5A554A;
+            padding: 0.5rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 400;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+            border: none;
+            font-family: '"Public Sans"', sans-serif;
+            letter-spacing: 0.02em;
+        }
+        .nav-btn:hover {
+            background-color: #5A554A;
+            color: #F4F4F4;
+        }
+        
+        .value-card { transition: all 0.4s ease; }
+        .value-card:hover { transform: translateY(-4px); }
+        .contact-card { transition: all 0.3s ease; }
+        .contact-card:hover { background-color: #E2E2DF; }
+        
+        .principle-item {
+            border-bottom: 1px solid #dfd8cb;
+            padding: 1.5rem 0;
+        }
+        .principle-item:last-child { border-bottom: none; }
+        
+        .expect-item {
+            border-bottom: 1px solid #dfd8cb;
+            padding: 1.5rem 0;
+        }
+        .expect-item:last-child { border-bottom: none; }
+        
+        @media (max-width: 768px) {
+            .hero-headline { font-size: 3.5rem !important; }
+            .section-headline { font-size: 3rem !important; }
+        }
+        @media (max-width: 480px) {
+            .hero-headline { font-size: 2.8rem !important; }
+            .section-headline { font-size: 2.5rem !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="fixed top-8 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-7xl bg-secondary/90 backdrop-blur-md rounded-full px-8 py-4 shadow-sm border border-line nav-container">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-6">
+                <div class="flex items-center gap-1">
+                    <a href="index.html" class="text-2xl font-serif text-surface tracking-tight leading-none">SEREX</a>
+                    <span class="text-xs font-serif text-surface/60 tracking-widest leading-none mt-1">Studio</span>
+                </div>
+                <span class="text-[10px] font-serif text-surface/40 tracking-[0.25em] uppercase border-l border-surface/20 pl-4">Where Serenity Meets Exclusivity</span>
+            </div>
+            <div class="hidden lg:flex items-center gap-6 text-sm font-medium text-surface/80">
+                <a href="index.html#work" class="link-underline hover:text-surface font-sans text-sm">Work</a>
+                <a href="index.html#ways" class="link-underline hover:text-surface font-sans text-sm">Ways To Work With Me</a>
+                <a href="index.html#meet" class="link-underline hover:text-surface font-sans text-sm">Meet Ruth</a>
+                <a href="index.html#contact" class="nav-btn">Let's Talk</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="relative min-h-screen flex items-center pt-32 pb-20 px-[5vw]" style="background-image: url('https://i.imgur.com/4pVn1si.png'); background-size: cover; background-position: center;">
+        <div class="absolute inset-0 bg-black/10"></div>
+        <div class="relative z-10 max-w-7xl mx-auto w-full">
+            <div class="max-w-2xl space-y-6">
+                <p class="text-sm font-semibold uppercase tracking-[0.2em] text-white/80">Hey, Founder.</p>
+                <h1 class="text-5xl lg:text-7xl font-serif text-white font-bold leading-tight">
+                    I'm <span class="text-accent italic">Ruth.</span>
+                </h1>
+                <p class="text-xl lg:text-2xl text-white/90 leading-relaxed max-w-lg">
+                    I love making wellness brands sound less like brands and more like the person behind them.
+                </p>
+                <p class="text-lg text-white/70 max-w-md leading-relaxed">
+                    So I'm your girl if your brand looks right, but doesn't quite feel right.
+                </p>
+                <div class="flex flex-wrap gap-4 pt-4">
+                    <a href="index.html#work" class="bg-white/20 backdrop-blur-sm text-white px-10 py-4 rounded-full font-bold hover:bg-white/30 transition-all border border-white/30">View My Work</a>
+                    <a href="index.html#contact" class="bg-accent text-ink px-10 py-4 rounded-full font-bold hover:brightness-110 transition-all">Let's Talk</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- TESTIMONIALS -->
+    <section class="py-24 border-t border-line bg-surface">
+        <div class="px-[5vw] mb-16">
+            <p class="text-xs font-sans font-bold uppercase tracking-[0.3em] text-ink/30 mb-2 section-label">What People Love About Working With Me</p>
+        </div>
+        <div class="px-[5vw] max-w-4xl mx-auto">
+            <blockquote class="space-y-6 text-center">
+                <p class="text-2xl lg:text-3xl text-ink leading-relaxed font-sans">"Her perspective helped me see that authenticity is not something a brand needs to declare — it is something people should be able to experience and recognise for themselves."</p>
+                <cite class="not-italic block">
+                    <span class="font-bold text-lg tracking-tight font-sans text-accent">Simone Giusti</span>
+                    <span class="block text-xs text-ink/40 uppercase tracking-widest font-sans mt-1">Founder of Rio Cavo</span>
+                </cite>
+            </blockquote>
+        </div>
+    </section>
+
+    <!-- POSITIONING STATEMENT -->
+    <section class="py-24 px-[5vw] bg-base">
+        <div class="max-w-7xl mx-auto">
+            <div class="border-t border-line pt-20">
+                <p class="text-xs font-sans font-bold uppercase tracking-[0.3em] text-ink/30 mb-12 section-label">Positioning Statement</p>
+                <h2 class="text-4xl lg:text-6xl font-serif text-accent font-bold max-w-5xl leading-tight mb-12 section-headline">Your brand can look right and still not feel right.</h2>
+                <div class="grid lg:grid-cols-2 gap-12 items-end">
+                    <div class="space-y-6 text-xl text-ink/60 leading-relaxed max-w-xl font-sans">
+                        <p>Sometimes you know exactly what's missing. Sometimes you just know something feels off.</p>
+                        <p>I help you find the gap — and make the brand feel like itself again.</p>
+                    </div>
+                    <div class="flex justify-end">
+                        <div class="w-32 h-px bg-accent"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHAT'S NEW AT SEREX -->
+    <section class="py-32 px-[5vw] bg-surface">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="text-xs font-sans font-bold uppercase tracking-[0.3em] text-ink/30 mb-4 section-label">What's New at Serex?</p>
+            <h2 class="text-6xl lg:text-8xl font-serif text-accent font-bold mb-12 section-headline">5 Minutes for Clarity.</h2>
+            <div class="max-w-2xl mx-auto space-y-8 font-sans">
+                <p class="text-2xl text-ink/80 italic">For founders whose website no longer sounds like the brand they've become.</p>
+                <div class="space-y-4 text-lg text-ink/60 leading-relaxed">
+                    <p>Your brand has evolved. Your website hasn't caught up yet.</p>
+                    <p>Most founders feel it before they can name it. The words on the homepage used to sound right. Now something feels slightly off — not wrong enough to justify a full rebrand, but present enough to notice.</p>
+                    <p class="text-ink/50 italic">The Brand Voice Website Questionnaire was built for exactly that moment. Four dimensions. One honest look.</p>
+                </div>
+                <div class="grid sm:grid-cols-2 gap-8 pt-12 text-left">
+                    <div class="space-y-4">
+                        <span class="text-xs font-bold text-ink/40 uppercase tracking-widest">01 — Make It Exclusively Yours</span>
+                        <p class="text-sm text-ink/60">A version shaped entirely around your brand — personalised before you answer a single question.</p>
+                        <a href="index.html#contact" class="btn-primary text-sm px-8 py-3">Request My Exclusive Questionnaire →</a>
+                    </div>
+                    <div class="space-y-4 border-l border-line pl-8">
+                        <span class="text-xs font-bold text-ink/40 uppercase tracking-widest">02 — Work Through It Yourself</span>
+                        <p class="text-sm text-ink/60">A self-guided questionnaire you complete at your own pace.</p>
+                        <a href="questionnaire.html" class="btn-secondary text-sm px-8 py-3">Get My Questionnaire →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SHE GLOWS (Preview) -->
+    <section id="work" class="py-32 px-[5vw] bg-base">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col lg:flex-row justify-between items-end gap-12 mb-20">
+                <div class="space-y-4">
+                    <h2 class="text-6xl lg:text-8xl font-serif text-accent font-bold section-headline">She Glows</h2>
+                </div>
+                <div class="lg:max-w-xl space-y-8 font-sans">
+                    <p class="text-2xl text-ink/70 leading-relaxed">A complete wellness brand experience built around fire, healing, emotional recognition, and the belief that women deserve brands that speak to them like people — not consumers.</p>
+                    <a href="sheglows.html"><span class="btn-primary text-sm px-8 py-3">View She Glows</span></a>
+                </div>
+            </div>
+            <div class="relative group cursor-pointer overflow-hidden rounded-2xl shadow-2xl">
+                <img class="w-full h-auto object-contain transition-transform duration-1000 group-hover:scale-105" src="https://i.imgur.com/L5SfM34.png" alt="She Glows moodboard" />
+            </div>
+        </div>
+    </section>
+
+    <!-- CONVERSION AUDIT & FRAMEWORK (Previews) -->
+    <section class="pb-32 px-[5vw] bg-base">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16">
+            <article class="group cursor-pointer space-y-8">
+                <div class="overflow-hidden rounded-2xl shadow-lg bg-surface">
+                    <img class="w-full h-auto object-contain transition-transform duration-700" src="https://i.imgur.com/Dn0FG8A.jpeg" alt="Conversion Architecture Audit document" />
+                </div>
+                <div class="space-y-4">
+                    <h3 class="text-3xl font-serif text-accent font-bold">Conversion Architecture Audit</h3>
+                    <p class="text-ink/60 text-lg leading-relaxed font-sans">Why the top 1% of brand designers convert without trying — and the three sections worth auditing.</p>
+                    <p class="text-ink/50 text-sm leading-relaxed font-sans">They convert because they signal trust. Headlines that filter. About sections that stop scrollers. Featured sections that tell visitors what to do next.</p>
+                    <a href="audit.html" class="btn-secondary text-sm px-8 py-3">Explore the Audit →</a>
+                </div>
+            </article>
+            <article class="group cursor-pointer space-y-8">
+                <div class="overflow-hidden rounded-2xl shadow-lg bg-surface">
+                    <img class="w-full h-auto object-contain transition-transform duration-700" src="https://i.imgur.com/9DQoZE4.jpeg" alt="60/20/17/3 Awareness Framework diagram" />
+                </div>
+                <div class="space-y-4">
+                    <h3 class="text-3xl font-serif text-accent font-bold">60/20/17/3 Awareness Framework</h3>
+                    <p class="text-ink/60 text-lg leading-relaxed font-sans">I found a marketing framework on YouTube. Then I tried it on myself.</p>
+                    <p class="text-ink/50 text-sm leading-relaxed font-sans">I wanted to know if it could explain something I was seeing in my own content — and what would happen if I stopped treating every person in my audience like they needed the same thing.</p>
+                    <a href="framework.html" class="btn-secondary text-sm px-8 py-3">View the Field Study →</a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- WAYS TO WORK WITH ME -->
+    <section id="ways" class="py-32 px-[5vw] bg-surface">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-12 gap-12 mb-24">
+                <div class="lg:col-span-4">
+                    <h2 class="text-4xl lg:text-5xl font-serif text-accent font-bold section-headline">Ways to Work With Me</h2>
+                </div>
+                <div class="lg:col-span-8 space-y-8 text-xl text-ink/70 leading-relaxed font-sans">
+                    <p>Different brands need different things. Sometimes you need the thinking first. Sometimes the words. Sometimes someone to step back and see what isn't working.</p>
+                </div>
+            </div>
+
+            <div class="space-y-px bg-line border-y border-line">
+                <div class="py-12 bg-surface grid md:grid-cols-12 gap-8 items-start">
+                    <div class="md:col-span-1 text-xs font-bold text-ink/30 font-sans">01</div>
+                    <div class="md:col-span-4">
+                        <h3 class="text-3xl font-serif mb-4 text-ink font-bold">Brand Strategy</h3>
+                        <p class="text-accent italic text-lg font-serif">Find the thinking before finding the words.</p>
+                    </div>
+                    <div class="md:col-span-5 text-ink/50 space-y-1 font-sans">
+                        <p>Turn what your brand believes, what you're building, and where you're going into a clearer strategic direction.</p>
+                        <p class="mt-2">Positioning · Brand Messaging · Brand Voice · Audience &amp; Differentiation</p>
+                    </div>
+                    <div class="md:col-span-2 md:text-right">
+                        <a href="index.html#contact" class="text-secondary font-bold font-sans link-underline">Inquire</a>
+                    </div>
+                </div>
+                <div class="py-12 bg-surface grid md:grid-cols-12 gap-8 items-start">
+                    <div class="md:col-span-1 text-xs font-bold text-ink/30 font-sans">02</div>
+                    <div class="md:col-span-4">
+                        <h3 class="text-3xl font-serif mb-4 text-ink font-bold">Copywriting</h3>
+                        <p class="text-accent italic text-lg font-serif">Make the words sound like you.</p>
+                    </div>
+                    <div class="md:col-span-5 text-ink/50 space-y-1 font-sans">
+                        <p>Copy that carries your voice, communicates what matters and makes the right people feel something.</p>
+                        <p class="mt-2">Website Copy · Brand Copy · Product Storytelling · Email Copy</p>
+                    </div>
+                    <div class="md:col-span-2 md:text-right">
+                        <a href="index.html#contact" class="text-secondary font-bold font-sans link-underline">Inquire</a>
+                    </div>
+                </div>
+                <div class="py-12 bg-surface grid md:grid-cols-12 gap-8 items-start">
+                    <div class="md:col-span-1 text-xs font-bold text-ink/30 font-sans">03</div>
+                    <div class="md:col-span-4">
+                        <h3 class="text-3xl font-serif mb-4 text-ink font-bold">Content Strategy</h3>
+                        <p class="text-accent italic text-lg font-serif">Give your content somewhere to go.</p>
+                    </div>
+                    <div class="md:col-span-5 text-ink/50 space-y-1 font-sans">
+                        <p>Build a content system around what your brand needs to say, who needs to hear it, and what should happen next.</p>
+                        <p class="mt-2">Content Strategy · Content Pillars · Hooks &amp; CTAs · Editorial Direction</p>
+                    </div>
+                    <div class="md:col-span-2 md:text-right">
+                        <a href="index.html#contact" class="text-secondary font-bold font-sans link-underline">Inquire</a>
+                    </div>
+                </div>
+                <div class="py-12 bg-surface grid md:grid-cols-12 gap-8 items-start">
+                    <div class="md:col-span-1 text-xs font-bold text-ink/30 font-sans">04</div>
+                    <div class="md:col-span-4">
+                        <h3 class="text-3xl font-serif mb-4 text-ink font-bold">Email Marketing</h3>
+                        <p class="text-accent italic text-lg font-serif">Make every email part of the brand.</p>
+                    </div>
+                    <div class="md:col-span-5 text-ink/50 space-y-1 font-sans">
+                        <p>From the first welcome to the next launch, build an email experience that feels like a natural extension of the brand.</p>
+                        <p class="mt-2">Email Strategy · Welcome Sequences · Nurture Sequences · Campaigns</p>
+                    </div>
+                    <div class="md:col-span-2 md:text-right">
+                        <a href="index.html#contact" class="text-secondary font-bold font-sans link-underline">Inquire</a>
+                    </div>
+                </div>
+                <div class="py-12 bg-surface grid md:grid-cols-12 gap-8 items-start">
+                    <div class="md:col-span-1 text-xs font-bold text-ink/30 font-sans">05</div>
+                    <div class="md:col-span-4">
+                        <h3 class="text-3xl font-serif mb-4 text-ink font-bold">Brand &amp; Conversion Audits</h3>
+                        <p class="text-accent italic text-lg font-serif">Find what's getting lost between the brand and the audience.</p>
+                    </div>
+                    <div class="md:col-span-5 text-ink/50 space-y-1 font-sans">
+                        <p>A closer look at the words, messaging and journey that shape how people experience your brand — and where the experience starts to lose them.</p>
+                        <p class="mt-2">Brand Voice · Website Copy · Conversion · Customer Journey</p>
+                    </div>
+                    <div class="md:col-span-2 md:text-right">
+                        <a href="index.html#contact" class="text-secondary font-bold font-sans link-underline">Inquire</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-24 text-center space-y-6">
+                <p class="text-2xl font-serif text-accent font-bold">Not sure where to start?</p>
+                <p class="text-ink/60 max-w-xl mx-auto font-sans">You don't need to arrive with all the answers. Tell me what's not quite translating, and we'll figure out the right next step.</p>
+                <a href="index.html#contact" class="btn-primary">Start A Conversation</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT FEELS TO WORK WITH ME -->
+    <section class="py-32 px-[5vw] bg-base border-t border-line">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-12 gap-12 mb-20">
+                <div class="lg:col-span-5">
+                    <p class="text-xs font-sans font-bold uppercase tracking-[0.3em] text-ink/30 mb-4 section-label">The Experience</p>
+                    <h2 class="text-5xl lg:text-6xl font-serif text-accent font-bold section-headline">How It Feels to Work With Me</h2>
+                    <p class="text-2xl text-ink/60 mt-6 font-serif italic">A partner, not just a pair of hands.</p>
+                </div>
+                <div class="lg:col-span-7">
+                    <div class="space-y-0">
+                        <div class="principle-item">
+                            <p class="text-2xl font-serif text-secondary font-bold">You'll get my perspective.</p>
+                            <p class="text-ink/50 text-sm font-sans mt-2">I bring strategic thinking to every conversation, not just execution.</p>
+                        </div>
+                        <div class="principle-item">
+                            <p class="text-2xl font-serif text-secondary font-bold">You can rely on me.</p>
+                            <p class="text-ink/50 text-sm font-sans mt-2">When I commit to something, I deliver. No exceptions.</p>
+                        </div>
+                        <div class="principle-item">
+                            <p class="text-2xl font-serif text-secondary font-bold">I'll keep you in the loop.</p>
+                            <p class="text-ink/50 text-sm font-sans mt-2">No surprises. Clear communication from start to finish.</p>
+                        </div>
+                        <div class="principle-item">
+                            <p class="text-2xl font-serif text-secondary font-bold">I'll care beyond the original request.</p>
+                            <p class="text-ink/50 text-sm font-sans mt-2">I stay invested in your brand's success long after the project ends.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHAT I EXPECT FROM YOU -->
+    <section class="py-32 px-[5vw] bg-surface border-t border-line">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-12 gap-12 mb-20">
+                <div class="lg:col-span-5">
+                    <p class="text-xs font-sans font-bold uppercase tracking-[0.3em] text-ink/30 mb-4 section-label">Collaboration</p>
+                    <h2 class="text-5xl lg:text-6xl font-serif text-accent font-bold section-headline">What I Expect From You</h2>
+                </div>
+                <div class="lg:col-span-7">
+                    <div class="space-y-0">
+                        <div class="expect-item">
+                            <p class="text-2xl font-serif text-secondary font-bold">Bring me into the real problem.</p>
+                            <p class="text-ink/50 text-sm font-sans mt-2">Don't hold back. The more honest you are, the better I can help.</p>
+                        </div>
+                        <div class="expect-item">
+                            <p class="text-2xl font-serif text-secondary font-bold">Be honest with me.</p>
+                            <p class="text-ink/50 text-sm font-sans mt-2">If something isn't working, tell me. I can handle it.</p>
+                        </div>
+                        <div class="expect-item">
+                            <p class="text-2xl font-serif text-secondary font-bold">Trust the process.</p>
+                            <p class="text-ink/50 text-sm font-sans mt-2">Strategic work takes time. I'll guide you through every step.</p>
+                        </div>
+                        <div class="expect-item">
+                            <p class="text-2xl font-serif text-secondary font-bold">Stay involved.</p>
+                            <p class="text-ink/50 text-sm font-sans mt-2">Your input is essential. This is a collaboration, not a handoff.</p>
+                        </div>
+                        <div class="expect-item">
+                            <p class="text-2xl font-serif text-secondary font-bold">Tell me what matters.</p>
+                            <p class="text-ink/50 text-sm font-sans mt-2">Your priorities shape the work. I need to know what's important to you.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHAT I CARE ABOUT -->
+    <section class="py-32 px-[5vw] bg-base border-t border-line">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <p class="text-xs font-sans font-bold uppercase tracking-[0.3em] text-ink/30 mb-4 section-label">Values</p>
+                <h2 class="text-5xl lg:text-7xl font-serif text-accent font-bold section-headline">What I Care About</h2>
+            </div>
+            <div class="grid md:grid-cols-5 gap-8">
+                <div class="value-card bg-surface p-8 rounded-2xl border border-line text-center">
+                    <span class="text-4xl font-serif text-accent block mb-4">01</span>
+                    <h3 class="text-xl font-serif text-ink font-bold mb-2">Creating Impact</h3>
+                    <p class="text-sm text-ink/50 font-sans">Work that changes how your brand shows up in the world.</p>
+                </div>
+                <div class="value-card bg-surface p-8 rounded-2xl border border-line text-center">
+                    <span class="text-4xl font-serif text-accent block mb-4">02</span>
+                    <h3 class="text-xl font-serif text-ink font-bold mb-2">Work That Feels True</h3>
+                    <p class="text-sm text-ink/50 font-sans">Authenticity over aesthetics. Substance over style.</p>
+                </div>
+                <div class="value-card bg-surface p-8 rounded-2xl border border-line text-center">
+                    <span class="text-4xl font-serif text-accent block mb-4">03</span>
+                    <h3 class="text-xl font-serif text-ink font-bold mb-2">Thoughtfulness</h3>
+                    <p class="text-sm text-ink/50 font-sans">Every word, every decision, every detail matters.</p>
+                </div>
+                <div class="value-card bg-surface p-8 rounded-2xl border border-line text-center">
+                    <span class="text-4xl font-serif text-accent block mb-4">04</span>
+                    <h3 class="text-xl font-serif text-ink font-bold mb-2">Reliability</h3>
+                    <p class="text-sm text-ink/50 font-sans">I show up, I deliver, and I don't disappear.</p>
+                </div>
+                <div class="value-card bg-surface p-8 rounded-2xl border border-line text-center">
+                    <span class="text-4xl font-serif text-accent block mb-4">05</span>
+                    <h3 class="text-xl font-serif text-ink font-bold mb-2">Curiosity</h3>
+                    <p class="text-sm text-ink/50 font-sans">I stay interested in what makes your brand unique.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MEET RUTH MACHAR -->
+    <section id="meet" class="py-32 px-[5vw] bg-surface border-t border-line">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-20 items-center">
+            <div class="lg:col-span-5">
+                <div class="rounded-2xl overflow-hidden shadow-2xl relative">
+                    <img class="w-full h-auto object-contain" src="https://i.imgur.com/4pVn1si.png" alt="editorial portrait of Ruth Machar" />
+                </div>
+            </div>
+            <div class="lg:col-span-7 space-y-10">
+                <p class="text-xs font-sans font-bold uppercase tracking-[0.3em] text-ink/30 section-label">Meet Ruth Machar</p>
+                <h2 class="text-5xl lg:text-6xl font-serif leading-tight text-accent font-bold section-headline">Founder of Serex Studio.</h2>
+                <div class="space-y-6 text-xl text-ink/70 leading-relaxed max-w-xl font-sans">
+                    <p>I'm Ruth — founder of Serex Studio and the person behind the words, strategy and thinking you see here.</p>
+                    <p>I love making wellness brands sound less like brands and more like the person behind them.</p>
+                    <p>I'm interested in the space between what a founder means, what a brand says, and what people actually feel. That's where I do my best work.</p>
+                    <p class="pt-4 font-bold text-ink">Based in Kenya. Working globally.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LET'S TALK / CONTACT -->
+    <section id="contact" class="py-32 px-[5vw] bg-base border-t border-line">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-12 gap-16">
+                <div class="lg:col-span-5 space-y-10">
+                    <h2 class="text-6xl lg:text-7xl font-serif text-ink font-bold section-headline">Let's Talk</h2>
+                    <p class="text-2xl text-ink/60 leading-relaxed font-sans">Have a brand that feels different in your head than it does in the world?</p>
+                    <p class="text-lg text-ink/50 leading-relaxed font-sans">Tell me what you're building, where things feel stuck, or what you're trying to make clearer. You don't have to be ready to work together to say hello.</p>
+                </div>
+                <div class="lg:col-span-7">
+                    <div class="space-y-px bg-line border border-line">
+                        <a href="https://linkedin.com/in/ruthmachar" target="_blank" class="group block p-12 bg-surface hover:bg-base transition-colors contact-card">
+                            <div class="flex justify-between items-start">
+                                <div class="space-y-4 font-sans">
+                                    <span class="text-xs font-bold text-ink/30 uppercase tracking-widest">LinkedIn — The Easiest Way</span>
+                                    <h3 class="text-3xl font-serif text-ink font-bold">Connect on LinkedIn</h3>
+                                    <p class="text-sm text-ink/50 max-w-md">Fair warning: I check LinkedIn daily, so your message may get a response before you know it.</p>
+                                </div>
+                                <i class="fa-brands fa-linkedin text-3xl text-secondary group-hover:text-accent transition-colors"></i>
+                            </div>
+                        </a>
+                        <div class="grid md:grid-cols-2 bg-line gap-px">
+                            <a href="https://wa.me/254118218091" target="_blank" class="group block p-12 bg-surface hover:bg-base transition-colors contact-card font-sans">
+                                <div class="space-y-4">
+                                    <span class="text-xs font-bold text-ink/30 uppercase tracking-widest">WhatsApp</span>
+                                    <h3 class="text-2xl font-serif text-ink font-bold">The second easiest way.</h3>
+                                    <p class="text-xs text-ink/40 italic">Fair warning: You may get an automatic reply before you hear from me personally.</p>
+                                </div>
+                            </a>
+                            <a href="mailto:serexbranding@gmail.com?subject=Exclusive%20Questionnaire%20Request%20%E2%80%94%20Your%20Name&body=Hi%20Ruth%2C%0A%0AI%20came%20across%20your%20%225%20Minutes%20for%20Clarity%22%20questionnaire%20and%20I%27d%20love%20to%20request%20the%20exclusive%20version.%0A%0AHere%27s%20a%20bit%20about%20me%20and%20my%20brand%3A%0A%0AMy%20name%3A%20%5BYour%20Name%5D%0AMy%20brand%3A%20%5BBrand%20Name%5D%0AWhat%20I%20do%3A%20%5BOne%20sentence%20about%20your%20work%5D%0AWhat%27s%20feeling%20off%3A%20%5BWhat%27s%20not%20quite%20translating%3F%5D%0A%0AI%27d%20love%20to%20hear%20more%20about%20how%20this%20works%20and%20when%20I%20can%20expect%20the%20questionnaire.%0A%0ALooking%20forward%20to%20connecting.%0A%0A%5BYour%20Name%5D" class="group block p-12 bg-surface hover:bg-base transition-colors contact-card font-sans">
+                                <div class="space-y-4">
+                                    <span class="text-xs font-bold text-ink/30 uppercase tracking-widest">Email — The Template Way</span>
+                                    <h3 class="text-2xl font-serif text-ink font-bold">The quickest way to request.</h3>
+                                    <p class="text-xs text-ink/40 italic">Just add your name and brand — the rest is written for you.</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-20 px-[5vw] border-t border-line bg-ink">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-start gap-12 font-sans">
+            <div class="space-y-4">
+                <p class="text-2xl font-serif tracking-tight text-surface">SEREX <span class="text-sm font-serif">&copy; Studio</span></p>
+                <p class="text-sm text-surface/50">Wellness Brand Strategy · Brand Messaging · Copywriting · Content Strategy · Email Marketing</p>
+            </div>
+            <div class="flex flex-wrap gap-12">
+                <div class="space-y-4">
+                    <p class="text-xs font-bold uppercase tracking-widest text-surface/40">Navigation</p>
+                    <ul class="space-y-2 text-sm text-surface/70">
+                        <li><a href="index.html#work" class="link-underline hover:text-surface">Work</a></li>
+                        <li><a href="index.html#ways" class="link-underline hover:text-surface">Ways to Work With Me</a></li>
+                        <li><a href="index.html#meet" class="link-underline hover:text-surface">Meet Ruth</a></li>
+                        <li><a href="index.html#contact" class="link-underline hover:text-surface">Let's Talk</a></li>
+                    </ul>
+                </div>
+                <div class="space-y-4">
+                    <p class="text-xs font-bold uppercase tracking-widest text-surface/40">Connect</p>
+                    <ul class="space-y-2 text-sm text-surface/70">
+                        <li><a href="https://linkedin.com/in/ruthmachar" target="_blank" class="link-underline hover:text-surface">LinkedIn</a></li>
+                        <li><a href="https://wa.me/254118218091" target="_blank" class="link-underline hover:text-surface">WhatsApp</a></li>
+                        <li><a href="mailto:serexbranding@gmail.com" class="link-underline hover:text-surface">Email</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-right">
+                <p class="text-xs text-surface/40">© 2026 SEREX. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

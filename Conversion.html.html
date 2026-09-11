@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Conversion Architecture Audit — SEREX</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ink: '#5A554A',
+                        accent: '#84B8A8',
+                        secondary: '#6D8EA0',
+                        hoverSec: '#7D9DA7',
+                        base: '#E2E2DF',
+                        surface: '#F4F4F4',
+                        line: '#dfd8cb',
+                    },
+                    fontFamily: {
+                        sans: ['"Public Sans"', 'sans-serif'],
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        body { -webkit-font-smoothing: antialiased; }
+        .link-underline { position: relative; }
+        .link-underline::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: #F4F4F4;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+        .link-underline:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        .section-label { letter-spacing: 0.3em; }
+        
+        .btn-primary {
+            background-color: #84B8A8;
+            color: #5A554A;
+            padding: 1rem 2.5rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .btn-primary:hover {
+            background-color: #6D8EA0;
+            color: #F4F4F4;
+        }
+        .btn-secondary {
+            border: 1px solid #6D8EA0;
+            color: #6D8EA0;
+            padding: 1rem 2.5rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: inline-block;
+            background: transparent;
+        }
+        .btn-secondary:hover {
+            background-color: #7D9DA7;
+            color: #F4F4F4;
+            border-color: #7D9DA7;
+        }
+        
+        .nav-btn {
+            background-color: #84B8A8;
+            color: #5A554A;
+            padding: 0.5rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 400;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+            border: none;
+            font-family: '"Public Sans"', sans-serif;
+            letter-spacing: 0.02em;
+        }
+        .nav-btn:hover {
+            background-color: #5A554A;
+            color: #F4F4F4;
+        }
+        
+        .audit-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: '"Public Sans"', sans-serif;
+        }
+        .audit-table th {
+            text-align: left;
+            padding: 1rem 1.5rem;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #5A554A;
+            border-bottom: 2px solid #dfd8cb;
+            font-weight: 600;
+        }
+        .audit-table td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #dfd8cb;
+            color: #5A554A;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        .audit-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .stat-highlight {
+            transition: all 0.4s ease;
+        }
+        .stat-highlight:hover {
+            transform: scale(1.02);
+        }
+        
+        @media (max-width: 768px) {
+            .audit-table td, .audit-table th {
+                padding: 0.75rem 1rem;
+                font-size: 0.85rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .audit-table td, .audit-table th {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden bg-base text-ink font-sans">
+
+    <!-- Navigation -->
+    <nav class="fixed top-8 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-7xl bg-secondary/90 backdrop-blur-md rounded-full px-8 py-4 shadow-sm border border-line nav-container">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-6">
+                <div class="flex items-center gap-1">
+                    <a href="index.html" class="text-2xl font-serif text-surface tracking-tight leading-none">SEREX</a>
+                    <span class="text-xs font-serif text-surface/60 tracking-widest leading-none mt-1">Studio</span>
+                </div>
+                <span class="text-[10px] font-serif text-surface/40 tracking-[0.25em] uppercase border-l border-surface/20 pl-4">Where Serenity Meets Exclusivity</span>
+            </div>
+            <div class="hidden lg:flex items-center gap-6 text-sm font-medium text-surface/80">
+                <a href="index.html#work" class="link-underline hover:text-surface font-sans text-sm">Work</a>
+                <a href="index.html#ways" class="link-underline hover:text-surface font-sans text-sm">Ways To Work With Me</a>
+                <a href="index.html#meet" class="link-underline hover:text-surface font-sans text-sm">Meet Ruth</a>
+                <a href="index.html#contact" class="nav-btn">Let's Talk</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Back to Portfolio Link -->
+    <div class="pt-32 pb-8 px-[5vw] bg-base">
+        <div class="max-w-7xl mx-auto">
+            <a href="index.html#work" class="text-sm font-sans text-ink/70 hover:text-ink transition-opacity duration-300 inline-flex items-center gap-2">
+                <i class="fa-solid fa-arrow-left text-xs"></i>
+                Back to the Portfolio
+            </a>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <header class="relative min-h-[60vh] flex items-center pt-0 pb-20 px-[5vw] bg-base">
+        <div class="max-w-7xl mx-auto w-full">
+            <div class="max-w-4xl">
+                <p class="text-xs font-sans font-bold uppercase tracking-[0.3em] text-ink/30 mb-6 section-label">Audit</p>
+                <h1 class="text-5xl lg:text-7xl font-serif text-accent font-bold leading-tight mb-8">The Conversion<br>Architecture Audit</h1>
+                <p class="text-xl lg:text-2xl text-ink/70 leading-relaxed max-w-2xl font-serif">Why the top 1% of brand designers convert without trying and the three sections worth auditing.</p>
+                <p class="text-sm text-ink/40 font-sans mt-8 tracking-widest uppercase">By Ruth Machar</p>
+                <p class="text-xs text-ink/30 font-sans mt-2 tracking-wider">Serex Studio · Where Serenity Meets Exclusivity</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- INTRO -->
+    <section class="py-24 px-[5vw] bg-surface border-t border-line">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-12 gap-16">
+                <div class="lg:col-span-4">
+                    <h2 class="text-3xl lg:text-4xl font-serif text-accent font-bold">The Architecture</h2>
+                </div>
+                <div class="lg:col-span-8 space-y-8">
+                    <p class="text-lg text-ink/60 leading-relaxed font-sans">I didn't analyze their color palettes, typography, or logo styles. I analyzed structure, language, and psychology.</p>
+                    <p class="text-lg text-ink/60 leading-relaxed font-sans">These patterns work whether you're a luxury brand designer, a wellness creative, or a packaging specialist because they're not about looking good. They're about signaling trust.</p>
+                    <p class="text-lg text-ink/60 leading-relaxed font-sans">What follows are the patterns I observed. The execution, the part where your unique voice meets these structures, is where strategy becomes personal.</p>
+                    <div class="grid md:grid-cols-2 gap-6 mt-8">
+                        <div class="bg-base rounded-2xl p-6 border border-line">
+                            <h4 class="text-sm font-bold uppercase tracking-widest text-accent mb-2">What This Is</h4>
+                            <p class="text-sm text-ink/60 font-sans">An audit of structure, language, and psychology across the top 1% of converting profiles.</p>
+                        </div>
+                        <div class="bg-base rounded-2xl p-6 border border-line">
+                            <h4 class="text-sm font-bold uppercase tracking-widest text-accent mb-2">What This Isn't</h4>
+                            <p class="text-sm text-ink/60 font-sans">A template. A formula that replaces your voice. A shortcut around knowing yourself.</p>
+                        </div>
+                    </div>
+                    <div class="bg-accent/10 rounded-2xl p-6 border border-accent/20">
+                        <h4 class="text-sm font-bold uppercase tracking-widest text-accent mb-2">Where It Applies</h4>
+                        <p class="text-sm text-ink/60 font-sans">Headline, About, and Featured, the three sections doing the most silent work.</p>
+                    </div>
+                    <p class="text-2xl font-serif text-accent font-bold mt-4">Let's go.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 01 — HEADLINE -->
+    <section class="py-24 px-[5vw] bg-base border-t border-line">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-12 gap-16">
+                <div class="lg:col-span-4">
+                    <span class="text-xs font-sans font-bold uppercase tracking-[0.3em] text-ink/30">01 Section One</span>
+                    <h2 class="text-4xl lg:text-5xl font-serif text-accent font-bold mt-4">The Headline</h2>
+                </div>
+                <div class="lg:col-span-8 space-y-8">
+                    <div class="stat-highlight bg-surface rounded-2xl p-8 border border-accent/30 text-center">
+                        <span class="text-6xl font-serif text-accent font-bold">40x</span>
+                        <p class="text-sm text-ink/60 font-sans mt-2 max-w-xl mx-auto">LinkedIn profiles with specific, results oriented headlines receive 40x more opportunities than those with generic job titles. Not 40% more, 40 times more.</p>
+                    </div>
+                    <p class="text-lg text-ink/60 leading-relaxed font-sans">LinkedIn is a search engine. When a potential client types "help with my brand" into the search bar, it scans your headline first. If all it finds is "Brand Designer | Logo & Identity," you're invisible.</p>
+                    <p class="text-lg text-ink/60 leading-relaxed font-sans">The pattern I observed: the top 1% don't use their headline to state a job title, LinkedIn already knows that. They use it to state their value proposition.</p>
+                    <div class="bg-surface rounded-2xl p-8 border border-line">
+                        <h4 class="text-sm font-bold uppercase tracking-widest text-accent mb-4">The Formula</h4>
+                        <p class="text-xl font-serif text-ink font-bold">"I help [specific audience] achieve [specific outcome] without [specific pain]"</p>
+                    </div>
+                    <div class="bg-surface rounded-2xl p-8 border border-line">
+                        <h4 class="text-sm font-bold uppercase tracking-widest text-accent mb-4">Real Examples From the Audit</h4>
+                        <ul class="space-y-3 text-ink/60 font-sans">
+                            <li class="pl-4 border-l-2 border-accent">"Helping wellness founders attract high value clients without burning out"</li>
+                            <li class="pl-4 border-l-2 border-accent">"Brand identity for beauty and food startups that need to stand out"</li>
+                            <li class="pl-4 border-l-2 border-accent">"For founders who want their brand to feel as premium as their product"</li>
+                        </ul>
+                    </div>
+                    <div class="bg-accent/10 rounded-2xl p-8 border border-accent/20">
+                        <h4 class="text-sm font-bold uppercase tracking-widest text-accent mb-4">Why This Works</h4>
+                        <p class="text-ink/60 leading-relaxed font-sans">Generic headlines are forgettable. Specific headlines are searchable. When you name your audience and outcome, you're not just describing yourself, you're qualifying your ideal client. They read it and think: "That's exactly what I need."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 02 — ABOUT -->
+    <section class="py-24 px-[5vw] bg-surface border-t border-line">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-12 gap-16">
+                <div class="lg:col-span-4">
+                    <span class="text-xs font-sans font-bold uppercase tracking-[0.3em] text-ink/30">02 Section Two</span>
+                    <h2 class="text-4xl lg:text-5xl font-serif text-accent font-bold mt-4">The About Section</h2>
+                </div>
+                <div class="lg:col-span-8 space-y-8">
+                    <p class="text-xl text-ink/70 leading-relaxed font-sans">The Authenticity Trap.</p>
+                    <p class="text-lg text-ink/60 leading-relaxed font-sans">There's a common belief that being "authentic" means being casual, behind the scenes, and unfiltered. But research into 1,011 executive LinkedIn posts revealed something counterintuitive: surface level authenticity, casual tone, unpolished photos, doesn't drive trust on its own. What drives trust is credibility signals.</p>
+                    <p class="text-lg text-ink/60 leading-relaxed font-sans">The pattern I observed: the top 1% don't open their About section with a resume. They open with a belief statement.</p>
+                    <div class="bg-base rounded-2xl p-8 border border-line">
+                        <h4 class="text-sm font-bold uppercase tracking-widest text-accent mb-4">Belief Statements From the Audit</h4>
+                        <ul class="space-y-4 text-ink/60 font-sans">
+                            <li class="pl-4 border-l-2 border-accent">"Brands don't grow because they're perfectly constructed. They grow because people can feel the person behind them."</li>
+                            <li class="pl-4 border-l-2 border-accent">"Strategy gives a brand direction. Soul gives it connection."</li>
+                            <li class="pl-4 border-l-2 border-accent">"Your product is premium. Your brand should feel that way too."</li>
+                        </ul>
+                    </div>
+                    <div class="bg-surface rounded-2xl p-8 border border-line">
+                        <h4 class="text-sm font-bold uppercase tracking-widest text-accent mb-4">The 3 Second Rule</h4>
+                        <p class="text-ink/60 leading-relaxed font-sans">On mobile, only the first 2 to 3 lines of your About section are visible before the reader taps "see more." The top 1% use those lines to state their philosophy, not their credentials.</p>
+                    </div>
+                    <div class="bg-accent/10 rounded-2xl p-8 border border-accent/20">
+                        <h4 class="text-sm font-bold uppercase tracking-widest text-accent mb-4">Why This Works</h4>
+                        <p class="text-ink/60 leading-relaxed font-sans">A belief signals point of view, and point of view signals expertise. When you state a belief, you're not just informing the reader, you're filtering them. The people who agree are your people. The people who disagree were never going to hire you anyway.</p>
+                    </div>
+                    <div class="bg-surface rounded-2xl p-8 border border-line">
+                        <h4 class="text-sm font-bold uppercase tracking-widest text-ink/30 mb-4">Here's What I've Noticed</h4>
+                        <p class="text-ink/60 leading-relaxed font-sans italic">A belief statement only works if it's actually your belief, not a borrowed one. The designers I work with take 2 to 3 rounds to land theirs. Not because they don't know themselves, but because articulating it in a way that lands takes extraction. And extraction benefits from a second pair of eyes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 03 — FEATURED -->
+    <section class="py-24 px-[5vw] bg-base border-t border-line">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-12 gap-16">
+                <div class="lg:col-span-4">
+                    <span class="text-xs font-sans font-bold uppercase tracking-[0.3em] text-ink/30">03 Section Three</span>
+                    <h2 class="text-4xl lg:text-5xl font-serif text-accent font-bold mt-4">The Featured Section</h2>
+                </div>
+                <div class="lg:col-span-8 space-y-8">
+                    <p class="text-lg text-ink/60 leading-relaxed font-sans">The Featured section is the most underutilized real estate on LinkedIn. Most designers treat it like a portfolio, pinning their most visually impressive project and calling it a day. The top 1% treat it like a storefront.</p>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-surface rounded-2xl p-8 border border-line">
+                            <h4 class="text-sm font-bold uppercase tracking-widest text-ink/40 mb-2">Most Profiles</h4>
+                            <p class="text-ink/60 font-sans">A portfolio. It shows what you've made.</p>
+                        </div>
+                        <div class="bg-surface rounded-2xl p-8 border border-accent/30">
+                            <h4 class="text-sm font-bold uppercase tracking-widest text-accent mb-2">Top 1%</h4>
+                            <p class="text-ink/60 font-sans">A storefront. It shows what the visitor should do next.</p>
+                        </div>
+                    </div>
+                    <table class="audit-table bg-surface rounded-2xl overflow-hidden border border-line">
+                        <thead>
+                            <tr><th>Type</th><th>Purpose</th><th>Example</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="font-bold text-accent">One Case Study</td><td>Proof</td><td>Problem to Solution to Result, with numbers</td></tr>
+                            <tr><td class="font-bold text-accent">One Philosophy Post</td><td>Belief</td><td>Your point of view on branding</td></tr>
+                            <tr><td class="font-bold text-accent">One Clear CTA</td><td>Direction</td><td>Newsletter, lead magnet, or booking link</td></tr>
+                        </tbody>
+                    </table>
+                    <p class="text-sm text-ink/50 font-sans leading-relaxed">Every visitor who lands on your profile is in one of two states: casual curiosity ("who is this person?") or active consideration ("could this be the person I need?"). Your Featured section has to serve both, the case study satisfies the considerer, the philosophy post builds trust with the curious browser, and the CTA gives both a next step.</p>
+                    <div class="stat-highlight bg-surface rounded-2xl p-8 border border-accent/30 text-center">
+                        <span class="text-5xl font-serif text-accent font-bold">333%</span>
+                        <p class="text-sm text-ink/60 font-sans mt-2 max-w-xl mx-auto">The "Proof, People, Place" framework, combining verifiable data, third party validation, and specific context, lifts engagement by 333% over posts without it.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 04 — WHY IT MATTERS -->
+    <section class="py-24 px-[5vw] bg-surface border-t border-line">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-12 gap-16">
+                <div class="lg:col-span-4">
+                    <h2 class="text-4xl lg:text-5xl font-serif text-accent font-bold">Why This Matters<br>More Than Ever</h2>
+                </div>
+                <div class="lg:col-span-8 space-y-8">
+                    <div class="stat-highlight bg-base rounded-2xl p-8 border border-line text-center">
+                        <span class="text-4xl font-serif text-accent font-bold">1.6%</span>
+                        <p class="text-sm text-ink/60 font-sans mt-2">of followers reached by the average company page post</p>
+                    </div>
+                    <p class="text-lg text-ink/60 leading-relaxed font-sans">The Visibility Math. LinkedIn's organic reach is declining for brands, but personal profiles are still winning. Your profile isn't a digital resume anymore. It's your primary marketing asset.</p>
+                    <div class="bg-accent/10 rounded-2xl p-8 border border-accent/20">
+                        <h4 class="text-sm font-bold uppercase tracking-widest text-accent mb-4">What This Means</h4>
+                        <p class="text-ink/60 leading-relaxed font-sans">The top 1% didn't get there by accident. They audited themselves. They iterated. They treated their profile as a living system, and they had someone who could see what they couldn't.</p>
+                        <p class="text-ink/50 font-sans italic mt-4">But here's what they also had: someone who could see what they couldn't.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 05 — ARCHITECTURE AT A GLANCE -->
+    <section class="py-24 px-[5vw] bg-base border-t border-line">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <p class="text-xs font-sans font-bold uppercase tracking-[0.3em] text-ink/30 mb-4 section-label">The Architecture, at a Glance</p>
+                <h2 class="text-4xl lg:text-5xl font-serif text-accent font-bold">What a Focused Audit<br>Actually Covers</h2>
+                <p class="text-lg text-ink/50 font-sans mt-4">The patterns are here. The application is personal.</p>
+            </div>
+            <table class="audit-table bg-surface rounded-2xl overflow-hidden border border-line">
+                <thead>
+                    <tr><th>Section</th><th>What Gets Examined</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td class="font-bold text-accent">Headline</td><td>Does it filter for your people? Does it sound like you?</td></tr>
+                    <tr><td class="font-bold text-accent">About</td><td>Does the first line stop a scroller? Is the belief actually yours?</td></tr>
+                    <tr><td class="font-bold text-accent">Featured</td><td>Does it serve both curiosity and consideration?</td></tr>
+                    <tr><td class="font-bold text-accent">Voice</td><td>Does every section feel like the same person wrote it?</td></tr>
+                    <tr><td class="font-bold text-accent">Gaps</td><td>What's missing that your ideal client is looking for?</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- SHARED BY -->
+    <section class="py-16 px-[5vw] bg-surface border-t border-line">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="text-sm text-ink/40 font-sans tracking-widest uppercase">Shared by Ruth Machar</p>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-24 px-[5vw] bg-base border-t border-line">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-4xl lg:text-5xl font-serif text-accent font-bold mb-6">Ready to See What You're Not Seeing?</h2>
+            <p class="text-lg text-ink/60 max-w-2xl mx-auto font-sans mb-6">I audit and optimize LinkedIn profiles for wellness and lifestyle creatives, not to fix it for you, but to show you what's already there and what isn't yet.</p>
+            <div class="bg-surface rounded-2xl p-8 border border-line max-w-md mx-auto mb-10">
+                <p class="text-2xl font-serif text-ink font-bold">One Profile · $150 · One Week</p>
+            </div>
+            <a href="index.html#contact" class="btn-primary">Start A Conversation</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-20 px-[5vw] border-t border-line bg-ink">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-start gap-12 font-sans">
+            <div class="space-y-4">
+                <p class="text-2xl font-serif tracking-tight text-surface">SEREX <span class="text-sm font-serif">&copy; Studio</span></p>
+                <p class="text-sm text-surface/50">Wellness Brand Strategy · Brand Messaging · Copywriting · Content Strategy · Email Marketing</p>
+            </div>
+            <div class="flex flex-wrap gap-12">
+                <div class="space-y-4">
+                    <p class="text-xs font-bold uppercase tracking-widest text-surface/40">Navigation</p>
+                    <ul class="space-y-2 text-sm text-surface/70">
+                        <li><a href="index.html#work" class="link-underline hover:text-surface">Work</a></li>
+                        <li><a href="index.html#ways" class="link-underline hover:text-surface">Ways to Work With Me</a></li>
+                        <li><a href="index.html#meet" class="link-underline hover:text-surface">Meet Ruth</a></li>
+                        <li><a href="index.html#contact" class="link-underline hover:text-surface">Let's Talk</a></li>
+                    </ul>
+                </div>
+                <div class="space-y-4">
+                    <p class="text-xs font-bold uppercase tracking-widest text-surface/40">Connect</p>
+                    <ul class="space-y-2 text-sm text-surface/70">
+                        <li><a href="https://linkedin.com/in/ruthmachar" target="_blank" class="link-underline hover:text-surface">LinkedIn</a></li>
+                        <li><a href="https://wa.me/254118218091" target="_blank" class="link-underline hover:text-surface">WhatsApp</a></li>
+                        <li><a href="mailto:serexbranding@gmail.com" class="link-underline hover:text-surface">Email</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-right">
+                <p class="text-xs text-surface/40">© 2026 SEREX. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
