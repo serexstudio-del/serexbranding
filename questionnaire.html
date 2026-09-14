@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>5 Minutes for Clarity — SEREX Studio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -310,6 +312,7 @@
             border-radius: 9999px;
         }
         .q-submit-btn:hover { background: #6D8EA0; }
+        .q-submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .q-submit-note {
             font-size: 12px;
             color: #5A554A;
@@ -478,6 +481,38 @@
             min-height: 20px;
         }
         
+        .q-thankyou {
+            display: none;
+            padding: 80px 48px;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .q-thankyou.visible { display: block; }
+        .q-thankyou-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(36px, 5vw, 56px);
+            font-weight: 400;
+            color: #5A554A;
+            margin-bottom: 24px;
+        }
+        .q-thankyou-text {
+            font-size: 16px;
+            color: #5A554A;
+            opacity: 0.7;
+            line-height: 1.8;
+            max-width: 560px;
+            margin: 0 auto 32px;
+        }
+        .q-thankyou-signature {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            font-style: italic;
+            color: #5A554A;
+            opacity: 0.6;
+            margin-top: 24px;
+        }
+        
         .q-footer {
             padding: 40px 48px;
             text-align: center;
@@ -493,7 +528,6 @@
         }
         .q-footer span { color: #84B8A8; }
         
-        /* Back to Portfolio link */
         .back-link {
             padding: 24px 48px;
             background: #E2E2DF;
@@ -511,6 +545,41 @@
         }
         .back-link a:hover { opacity: 1; }
         
+        .q-intro-form {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 48px 20px;
+        }
+        .q-intro-form label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #5A554A;
+            opacity: 0.6;
+            margin-bottom: 8px;
+        }
+        .q-intro-form input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #dfd8cb;
+            background: #FFFFFF;
+            font-family: 'Public Sans', sans-serif;
+            font-size: 15px;
+            color: #5A554A;
+            border-radius: 2px;
+            margin-bottom: 24px;
+            transition: border-color 0.2s;
+        }
+        .q-intro-form input:focus {
+            outline: none;
+            border-color: #84B8A8;
+        }
+        .q-intro-form input:invalid:not(:placeholder-shown) {
+            border-color: #C0392B;
+        }
+        
         @media (max-width: 768px) {
             .q-hero { padding: 60px 24px; }
             .q-section { padding: 60px 24px; }
@@ -524,6 +593,8 @@
             .q-footer { padding: 32px 24px; }
             .q-rating-btn { max-width: 44px; font-size: 16px; }
             .back-link { padding: 16px 24px; }
+            .q-intro-form { padding: 40px 24px 10px; }
+            .q-thankyou { padding: 60px 24px; }
         }
     </style>
 </head>
@@ -548,11 +619,19 @@
             This questionnaire was built for exactly that moment. Four dimensions. One honest look at whether your website is still speaking the language of the brand you have actually become.<br><br>
             <strong>Five minutes. Four dimensions. One honest look.</strong>
         </p>
-        <div class="q-scroll-hint" onclick="document.querySelector('.q-scale-bar').scrollIntoView({behavior:'smooth'})">
+        <div class="q-scroll-hint" onclick="document.querySelector('.q-intro-form').scrollIntoView({behavior:'smooth'})">
             <div class="arrow">↓</div>
             Begin the questionnaire
         </div>
     </div>
+</div>
+
+<!-- INTRO FORM (Name + Email) -->
+<div class="q-intro-form">
+    <label for="user-name">Your Name</label>
+    <input type="text" id="user-name" placeholder="e.g. Ruth Machar" autocomplete="name" required />
+    <label for="user-email">Your Email</label>
+    <input type="email" id="user-email" placeholder="you@yourbrand.com" autocomplete="email" required />
 </div>
 
 <!-- SCALE -->
@@ -851,8 +930,15 @@
 
 <!-- SUBMIT -->
 <div class="q-submit-wrap" id="q-submit-wrap">
-    <button class="q-submit-btn" onclick="calculateResults()">See Your Results</button>
-    <p class="q-submit-note">Your answers are not stored anywhere. This is for your eyes only.</p>
+    <button class="q-submit-btn" id="q-submit-btn" onclick="calculateResults()">See Your Results</button>
+    <p class="q-submit-note">Your answers are not stored publicly. This is for your eyes only.</p>
+</div>
+
+<!-- THANK YOU -->
+<div class="q-thankyou" id="q-thankyou">
+    <h2 class="q-thankyou-title">Thank you for taking the time.</h2>
+    <p class="q-thankyou-text">That wasn't a small thing — looking honestly at your own website takes more courage than most people admit. Your scores are below. Sit with them. Let them settle. And if anything feels like it's pointing to something bigger, you know where to find me.</p>
+    <p class="q-thankyou-signature">— Ruth</p>
 </div>
 
 <!-- RESULTS -->
@@ -885,6 +971,30 @@
 
 <script>
     const qResponses = {};
+    const FORMSPREE_URL = 'https://formspree.io/f/xyeygpdz';
+
+    const QUESTION_TEXTS = {
+        '1-1': 'When you read your website copy out loud, does it sound like you having a genuine conversation with your ideal client — or does it sound like it was written for a brochure?',
+        '1-2': 'Can a stranger read your website and get a real sense of who you are as a person — your values, your perspective, your way of seeing the world?',
+        '1-3': 'Does your website use language your clients actually use when they describe their own pain points — or does it default to industry terminology and professional distance?',
+        '1-4': 'If you removed your logo and brand name from your website, would your copy still be recognisably yours — or could it belong to any wellness brand in your space?',
+        '1-5': 'Does your website acknowledge the emotional reality of what your clients are going through before it talks about your solution?',
+        '2-1': 'Does your website copy feel distinctly yours — with your specific perspective, personality and imperfections intact rather than smoothed into something generic?',
+        '2-2': 'Does your website avoid generic wellness phrases — like "holistic approach," "transformative journey," or "empower you to thrive" — that could appear on dozens of other brands\' websites?',
+        '2-3': 'Does your copy feel meaningfully different from your competitors — in structure, language and the specific way you express your point of view?',
+        '2-4': 'If you read your website out loud, does it have a rhythm and cadence that feels natural — or does it sound like it was written to be read silently, not spoken?',
+        '2-5': 'Do you ever re-read your website copy and feel like it\'s missing something — not factually, but in the way it makes you feel?',
+        '3-1': 'Does your website clearly articulate the specific emotional and psychological state your ideal client is in when they first encounter your brand?',
+        '3-2': 'Does your copy show that you understand not just the problem your client has, but how it actually feels to have that problem?',
+        '3-3': 'Does the emotional tone of your website shift appropriately for where someone is in their journey — or does it use the same energy for someone discovering you as for someone ready to buy?',
+        '3-4': 'Do you include emotional detail in your copy — not just facts and features, but the texture of what it feels like to work with you or use your products?',
+        '3-5': 'When someone finishes reading your website, do they feel understood — or just informed?',
+        '4-1': 'Does your website make it immediately clear who you are, what you do and who you\'re for — without requiring someone to search for it?',
+        '4-2': 'Does your website have a clear and meaningful next step for every visitor — not just "contact us," but something aligned with where they are in their journey?',
+        '4-3': 'Would someone who lands on your website know within 5 seconds whether they\'re in the right place or not?',
+        '4-4': 'Does your website show the value of what you offer in a way that\'s concrete, not abstract — using real examples or outcomes rather than just adjectives?',
+        '4-5': 'Does your website feel complete and self-contained — or does it leave you feeling like something important is missing?'
+    };
 
     function rate(btn, section, question, value) {
         const parent = btn.closest('.q-question');
@@ -905,12 +1015,27 @@
     }
 
     function calculateResults() {
+        const userName = document.getElementById('user-name').value.trim();
+        const userEmail = document.getElementById('user-email').value.trim();
+
+        if (!userName) {
+            alert('Please enter your name before submitting.');
+            document.getElementById('user-name').focus();
+            return;
+        }
+        if (!userEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userEmail)) {
+            alert('Please enter a valid email address before submitting.');
+            document.getElementById('user-email').focus();
+            return;
+        }
+
         const totalQuestions = 20;
         const answered = Object.keys(qResponses).length;
         if (answered < totalQuestions) {
             alert(`Please answer all ${totalQuestions} questions before seeing your results. You've answered ${answered}.`);
             return;
         }
+
         let sectionTotals = {1: 0, 2: 0, 3: 0, 4: 0};
         for (let section = 1; section <= 4; section++) {
             let total = 0;
@@ -936,9 +1061,48 @@
         }
         document.getElementById('q-meaning-text').textContent = meaning;
 
-        document.getElementById('q-results').classList.add('visible');
-        document.getElementById('q-submit-wrap').style.display = 'none';
-        document.getElementById('q-results').scrollIntoView({ behavior: 'smooth' });
+        const sectionLabels = ['Human Voice', 'AI Resistance', 'Emotional Accuracy', 'Clarity & Conversion'];
+        let answerBreakdown = '';
+        for (let section = 1; section <= 4; section++) {
+            answerBreakdown += `\n--- ${sectionLabels[section - 1]} (${sectionTotals[section]} / 25) ---\n`;
+            for (let q = 1; q <= 5; q++) {
+                const key = `${section}-${q}`;
+                answerBreakdown += `Q${(section - 1) * 5 + q}: ${qResponses[key]}/5 — ${QUESTION_TEXTS[key]}\n\n`;
+            }
+        }
+
+        const submitBtn = document.getElementById('q-submit-btn');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
+
+        const formData = new FormData();
+        formData.append('_subject', `Brand Voice Questionnaire — ${userName} — Score: ${grandTotal}/100`);
+        formData.append('Name', userName);
+        formData.append('Email', userEmail);
+        formData.append('Total Score', `${grandTotal}/100`);
+        formData.append('Human Voice', `${sectionTotals[1]}/25`);
+        formData.append('AI Resistance', `${sectionTotals[2]}/25`);
+        formData.append('Emotional Accuracy', `${sectionTotals[3]}/25`);
+        formData.append('Clarity & Conversion', `${sectionTotals[4]}/25`);
+        formData.append('Interpretation', meaning);
+        formData.append('Detailed Answers', answerBreakdown);
+
+        fetch(FORMSPREE_URL, {
+            method: 'POST',
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+        }).then(response => {
+            document.getElementById('q-thankyou').classList.add('visible');
+            document.getElementById('q-submit-wrap').style.display = 'none';
+            document.getElementById('q-results').classList.add('visible');
+            document.getElementById('q-thankyou').scrollIntoView({ behavior: 'smooth' });
+        }).catch(err => {
+            console.warn('Submission error:', err);
+            document.getElementById('q-thankyou').classList.add('visible');
+            document.getElementById('q-submit-wrap').style.display = 'none';
+            document.getElementById('q-results').classList.add('visible');
+            document.getElementById('q-thankyou').scrollIntoView({ behavior: 'smooth' });
+        });
     }
 
     function copyScores() {
